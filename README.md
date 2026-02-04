@@ -1,4 +1,8 @@
+
 # HTML-Projects
+<a href="https://hips.hearstapps.com/hmg-prod/images/most-popular-dog-breeds-kerry-blue-terrier-68096bdb872b7.jpg?crop=0.668xw:1.00xh;0.0833xw,0">
+Clickhere to view image
+</a>
 Coding Projects completed as part of my HTML course.
 This Reository contains all coding projects completed as part of my HTML class
 The purpose of this repository is to:
