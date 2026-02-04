@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog Image</title>
+</head>
+<body>
+
+    <h1>My Dog Image</h1>
+
+    <!-- Implicit link to the image file -->
+    <img src="dog.jpg" alt="Picture of a dog" width="400">
+
+    <br><br>
+
+    <!-- Implicit link back to Assignment.html -->
+    <a href="Assignment.html">Home</a>
+
+</body>
+</html>
