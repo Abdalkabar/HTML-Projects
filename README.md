@@ -10,4 +10,7 @@ Practice writing clean and well-structured HTML
 - Apply CSS styling techniques
 - Track my progress using version control with Git and GitHub
 - Build an online portfolio that showcases my development skills
-All coursework for this class is developed locally and pushed to this repository regularly using GitHub Desktop.
+All coursework for this class is developed locally and pushed to this repository regularly using GitHub Desktop
+These are the Websites I made for this course:
+.Movie Theatre Site
+. Portfolio Website
