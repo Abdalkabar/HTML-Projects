@@ -12,5 +12,9 @@ Practice writing clean and well-structured HTML
 - Build an online portfolio that showcases my development skills
 All coursework for this class is developed locally and pushed to this repository regularly using GitHub Desktop
 These are the Websites I made for this course:
-.Movie Theatre Site
+.Movie Theater Site
 . Portfolio Website
+Movie Theater Site
+This is a home page for a movie theater styled using bootstrap 4. It contains many bootstrap componenets includingbut not limited to a navbar, jumbotron, form cards and dropdowns. 
+Portfolio Website.
+This is a homepage that displays my portfolio and a link to my github as well as a way to contact me for an opportunity work in diffeent projects.
