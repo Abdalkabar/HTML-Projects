@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One-Page Website</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
         }
@@ -29,7 +35,28 @@
         nav a:hover {
             background-color: #575757;
         }
-        .lightbox-modal {
+
+        /* Lightbox Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery img {
+            cursor: pointer;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        #lightboxModal {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -37,32 +64,75 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .lightbox-modal img {
+
+        #lightboxModal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
             max-width: 90%;
-            max-height: 80%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            max-height: 90%;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
             border-radius: 8px;
         }
-        .lightbox-caption {
+
+        #lightboxCaption {
             color: #fff;
-            margin-top: 12px;
             text-align: center;
-            max-width: 90%;
+            margin-top: 15px;
+            font-size: 1.1rem;
         }
+
         .close-btn {
             position: absolute;
             top: 20px;
             right: 30px;
             color: #fff;
-            font-size: 36px;
+            font-size: 40px;
             font-weight: bold;
             cursor: pointer;
-            user-select: none;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            color: #ccc;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 20px;
+            z-index: 1001;
+        }
+
+        .lightbox-nav:hover {
+            color: #ccc;
+        }
+
+        #prevBtn {
+            left: 20px;
+        }
+
+        #nextBtn {
+            right: 20px;
         }
     </style>
 </head>
@@ -85,17 +155,22 @@
     <!-- Pictures Section -->
     <section id="pictures">
         <h2>Picture Gallery</h2>
+        
+        <div class="gallery">
+            <img class="gallery-img" src="https://img.freepik.com/free-photo/pug-dog-isolated-white-background_2829-11416.jpg?semt=ais_hybrid&w=740&q=80" alt="Pug dog isolated on a white background">
+            <img class="gallery-img" src="https://static.vecteezy.com/system/resources/thumbnails/008/951/892/small/cute-puppy-pomeranian-mixed-breed-pekingese-dog-run-on-the-grass-with-happiness-photo.jpg" alt="Cute puppy running on grass">
+            <img class="gallery-img" src="https://images.dog.ceo/breeds/beagle/beagle3.jpg" alt="Beagle dog in outdoor setting">
+        </div>
 
-        <img class="gallery-image" src="https://img.freepik.com/free-photo/pug-dog-isolated-white-background_2829-11416.jpg?semt=ais_hybrid&w=740&q=80"
-             alt="Pug dog isolated on a white background" width="300">
-
-        <img class="gallery-image" src="https://static.vecteezy.com/system/resources/thumbnails/008/951/892/small/cute-puppy-pomeranian-mixed-breed-pekingese-dog-run-on-the-grass-with-happiness-photo.jpg"
-             alt="Cute puppy running on grass" width="300">
-
-        <div id="lightboxModal" class="lightbox-modal">
-            <span class="close-btn" aria-label="Close modal">&times;</span>
-            <img id="lightboxImage" class="lightbox-content" alt="">
-            <div id="lightboxCaption" class="lightbox-caption"></div>
+        <!-- Lightbox Modal -->
+        <div id="lightboxModal">
+            <button class="close-btn" onclick="closeLightbox()">&times;</button>
+            <button class="lightbox-nav" id="prevBtn" onclick="changeSlide(-1)">&#10094;</button>
+            <div class="lightbox-content">
+                <img id="lightboxImage" src="" alt="">
+                <p id="lightboxCaption"></p>
+            </div>
+            <button class="lightbox-nav" id="nextBtn" onclick="changeSlide(1)">&#10095;</button>
         </div>
     </section>
 
@@ -133,3 +208,4 @@
     <script src="js/script.js"></script>
 </body>
 </html>
+
