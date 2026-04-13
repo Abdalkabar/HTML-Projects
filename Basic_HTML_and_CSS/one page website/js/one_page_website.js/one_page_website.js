@@ -1,39 +1,71 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    var images = document.querySelectorAll('.gallery-image');
-    var modal = document.getElementById('lightboxModal');
-    var modalImage = document.getElementById('lightboxImage');
-    var caption = document.getElementById('lightboxCaption');
-    var closeBtn = document.querySelector('.close-btn');
+﻿const galleryItems = [
+  { large: "images/beagle.jpg",  caption: "Beagle"             },
+  { large: "images/golden.jpg",  caption: "Golden Retriever"   },
+  { large: "images/yorkie.jpg",  caption: "Yorkshire Terrier"  }
+];
 
-    function openLightbox(image) {
-        modal.style.display = 'flex';
-        modalImage.src = image.src;
-        modalImage.alt = image.alt;
-        caption.textContent = image.alt;
-    }
+let currentIndex = 0;
 
-    function closeLightbox() {
-        modal.style.display = 'none';
-    }
+const lightbox    = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const lightboxCap = document.getElementById("lightbox-caption");
+const closeBtn    = document.getElementById("lightbox-close");
+const prevBtn     = document.getElementById("lb-prev");
+const nextBtn     = document.getElementById("lb-next");
+const galleryCols = document.querySelectorAll(".gallery-grid .col");
 
-    images.forEach(function (image) {
-        image.style.cursor = 'pointer';
-        image.addEventListener('click', function () {
-            openLightbox(image);
-        });
-    });
+lightboxImg.style.transition = "opacity 0.18s ease";
 
-    closeBtn.addEventListener('click', closeLightbox);
+function openLightbox(index) {
+  currentIndex = index;
+  lightboxImg.src         = galleryItems[currentIndex].large;
+  lightboxImg.alt         = galleryItems[currentIndex].caption;
+  lightboxCap.textContent = galleryItems[currentIndex].caption;
+  lightbox.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
 
-    modal.addEventListener('click', function (event) {
-        if (event.target === modal || event.target === closeBtn) {
-            closeLightbox();
-        }
-    });
+function closeLightbox() {
+  lightbox.classList.remove("active");
+  lightboxImg.src = "";
+  document.body.style.overflow = "";
+}
 
-    document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape') {
-            closeLightbox();
-        }
-    });
+function showPrev() {
+  currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+  updateLightboxImage();
+}
+
+function showNext() {
+  currentIndex = (currentIndex + 1) % galleryItems.length;
+  updateLightboxImage();
+}
+
+function updateLightboxImage() {
+  lightboxImg.style.opacity = "0";
+  setTimeout(function () {
+    lightboxImg.src         = galleryItems[currentIndex].large;
+    lightboxImg.alt         = galleryItems[currentIndex].caption;
+    lightboxCap.textContent = galleryItems[currentIndex].caption;
+    lightboxImg.style.opacity = "1";
+  }, 180);
+}
+
+galleryCols.forEach(function (col, i) {
+  col.addEventListener("click", function () { openLightbox(i); });
+});
+
+closeBtn.addEventListener("click", closeLightbox);
+prevBtn.addEventListener("click", showPrev);
+nextBtn.addEventListener("click", showNext);
+
+lightbox.addEventListener("click", function (e) {
+  if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener("keydown", function (e) {
+  if (!lightbox.classList.contains("active")) return;
+  if (e.key === "Escape")     closeLightbox();
+  if (e.key === "ArrowLeft")  showPrev();
+  if (e.key === "ArrowRight") showNext();
 });
