@@ -1,6 +1,8 @@
 // This file contains the Main() entry point of the application
-// It instantiates MathDisplay and calls the Calculate() void method
-// in two different ways — by position and by named parameters
+// It demonstrates:
+//   - Creating an Employee object and displaying its info
+//   - Using polymorphism to store an Employee in an IQuittable variable
+//   - Calling the Quit() method through the interface type
 using System;
 
 class Program
@@ -8,49 +10,66 @@ class Program
     static void Main(string[] args)
     {
         // ==========================================
-        // VOID METHOD AND NAMED PARAMETERS ASSIGNMENT
+        // INTERFACE AND POLYMORPHISM ASSIGNMENT
         // ==========================================
 
         // Print a heading so the user knows what this program does
-        Console.WriteLine("--- Void Method & Named Parameters Assignment ---\n");
-
-        // Instantiate the MathDisplay class so we can call its Calculate() method
-        // A new object 'math' is created from the MathDisplay blueprint
-        MathDisplay math = new MathDisplay();
+        Console.WriteLine("--- Interface & Polymorphism Assignment ---\n");
 
         // -------------------------------------------------------
-        // STEP 3: Call the method passing in two numbers by position
-        // The arguments are matched to parameters left to right:
-        //   7  → number  (will be tripled)
-        //   42 → display (will be printed as-is)
-        // This is the standard way to call a method
+        // Create a regular Employee object using the constructor
+        // Pass in the employee's name, job title, and ID number
         // -------------------------------------------------------
+        Employee employee = new Employee("Sarah Connor", "Software Developer", 1042);
 
-        // Print a label so the output is clearly identified
-        Console.WriteLine("Call 1 — passing arguments by position:");
+        // Call DisplayInfo() to print the employee's details to the screen
+        Console.WriteLine("Employee Details:");
+        employee.DisplayInfo();
 
-        // Call Calculate() with two positional integer arguments
-        // No return value is captured since the method is void
-        math.Calculate(7, 42);
-
-        // Print a blank line for spacing between the two calls
+        // Print a blank line for spacing
         Console.WriteLine();
 
         // -------------------------------------------------------
-        // STEP 4: Call the method specifying parameters by name
-        // Named parameters use the syntax: parameterName: value
-        // They can be written in any order since the names make it clear
-        // which value belongs to which parameter
-        // Here we swap the order to show that named parameters are order-independent
+        // STEP 3: Polymorphism — store the Employee as an IQuittable type
+        //
+        // This is polymorphism in action:
+        //   - 'quittable' is declared as type IQuittable (the interface)
+        //   - but it holds an Employee object (the implementing class)
+        // This works because Employee implements IQuittable
+        // Through this variable we can only access methods defined in IQuittable
+        // In this case, that means only Quit() is accessible via 'quittable'
         // -------------------------------------------------------
+        IQuittable quittable = employee;
 
-        // Print a label so the output is clearly identified
-        Console.WriteLine("Call 2 — passing arguments by name:");
+        // Call Quit() through the IQuittable interface reference
+        // Even though the variable type is IQuittable, C# calls the
+        // Employee's version of Quit() at runtime — this is polymorphism
+        Console.WriteLine("Calling Quit() through IQuittable reference:");
+        quittable.Quit();
 
-        // Call Calculate() using named parameters in swapped order
-        // display: is listed first, number: is listed second
-        // C# matches each value to the correct parameter by name, not position
-        math.Calculate(display: 99, number: 15);
+        // Print a blank line for spacing
+        Console.WriteLine();
+
+        // -------------------------------------------------------
+        // BONUS: Create a second Employee and call Quit() directly
+        // This shows that any Employee object has access to Quit()
+        // since Employee implements IQuittable
+        // -------------------------------------------------------
+        Console.WriteLine("--- Second Employee ---\n");
+
+        // Create a second Employee object with different details
+        Employee employee2 = new Employee("John Doe", "Project Manager", 2087);
+
+        // Display the second employee's details
+        Console.WriteLine("Employee Details:");
+        employee2.DisplayInfo();
+
+        // Store the second employee as IQuittable type
+        // Again demonstrating that any Employee can be treated as IQuittable
+        IQuittable quittable2 = employee2;
+
+        // Call Quit() on the second employee through the interface reference
+        quittable2.Quit();
 
         // Print a blank line for spacing
         Console.WriteLine();
